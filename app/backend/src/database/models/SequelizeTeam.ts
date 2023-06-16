@@ -4,7 +4,7 @@ import db from '.';
 export default class SequelizeTeam extends Model<InferAttributes<SequelizeTeam>,
 InferAttributes<SequelizeTeam>> {
   declare id: CreationOptional<number>;
-  declare teamName: CreationOptional<string>;
+  declare teamName: string;
 }
 
 SequelizeTeam.init(

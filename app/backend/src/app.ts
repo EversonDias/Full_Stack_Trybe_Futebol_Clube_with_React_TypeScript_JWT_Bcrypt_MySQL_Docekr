@@ -1,25 +1,24 @@
 import * as express from 'express';
 import TeamController from './Controller/TeamController';
+import UserController from './Controller/LoginController';
+import router from './routes';
 
 class App {
   public app: express.Express;
   public team = TeamController;
+  public user = new UserController();
 
   constructor() {
     this.app = express();
 
     this.config();
-
+    this.router();
     // Não remover essa rota
     this.app.get('/', (req, res) => res.json({ ok: true }));
-    this.app.get(
-      '/teams',
-      (req: express.Request, res: express.Response) => this.team.getAll(req, res),
-    );
-    this.app.get(
-      '/teams/:id',
-      (req: express.Request, res: express.Response) => this.team.getId(req, res),
-    );
+  }
+
+  private router(): void {
+    this.app.use(router);
   }
 
   private config():void {
