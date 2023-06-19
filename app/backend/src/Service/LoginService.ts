@@ -16,7 +16,7 @@ export default class UserService {
       );
 
       if (isPasswordValid) {
-        const token = JWT.generateToken(props);
+        const token = JWT.generateToken(props, response.role);
 
         return { status: 'SUCCESS', data: { token } };
       }

@@ -1,7 +1,8 @@
 import { Router } from 'express';
-import teamRouter from './TeamsRouters';
+import teamRouter from './TeamsRouter';
 import loginRouter from './LoginRouter';
 import Validation from '../middlewares/Validations';
+import roleRouter from './RoleRouter';
 
 const router = Router();
 
@@ -12,6 +13,10 @@ router.use(
   Validation.isEmailValid,
   Validation.isPasswordValid,
   loginRouter,
+);
+router.use(
+  '/role',
+  roleRouter,
 );
 
 export default router;
