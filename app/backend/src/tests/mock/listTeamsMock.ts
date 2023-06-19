@@ -1,22 +1,22 @@
 export default [
   {
     id: 1,
-    team_name: 'São Paulo',
+    teamName: 'São Paulo',
   },
   {
     id: 2,
-    team_name: 'Santos',
+    teamName: 'Santos',
   },
   {
     id: 3,
-    team_name: 'Palmeiras',
+    teamName: 'Palmeiras',
   },
   {
     id: 4,
-    team_name: 'Flamengo',
+    teamName: 'Flamengo',
   },
   {
     id: 5,
-    team_name: 'Grêmio',
+    teamName: 'Grêmio',
   },
 ]

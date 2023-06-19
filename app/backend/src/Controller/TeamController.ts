@@ -14,7 +14,10 @@ export default class TeamController {
 
   getId = async (req: Request, res: Response): Promise<Response | void> => {
     const { id } = req.params;
-    const { data } = await this.teamService.getId(Number(id));
-    res.status(StatusHTTP.success).json(data);
+    const result = await this.teamService.getId(Number(id));
+    if (result.data !== null) {
+      res.status(StatusHTTP.success).json(result.data);
+    }
+    res.status(StatusHTTP.badRequest).json({ message: 'error' });
   };
 }
