@@ -5,8 +5,9 @@ import chaiHttp = require('chai-http');
 
 import { app } from '../app';
 import SequelizeUser from '../database/models/SequelizeUser';
-import { userMock } from './mock/userMock';
+import { tokenInvalid, userMock } from './mock/userMock';
 import StatusHTTP from '../utils/StatusHTTP';
+import LoginService from '../Service/LoginService';
 
 chai.use(chaiHttp);
 
@@ -74,6 +75,40 @@ describe('Login route test', () => {
       
     expect(status).to.equal(StatusHTTP.unauthorized);
     expect(body).to.deep.equal({ message: 'Invalid email or password' });
+  })
+
+  // it.only('router login/role return role', async () => {
+  //   const LoginBuild = SequelizeUser.build(userMock);
+  //   sinon.stub(SequelizeUser, 'findOne').resolves(LoginBuild);
+  //   const {email} = userMock;
+  //   const response = await chai.request(app)
+  //     .post('/login')
+  //     .send({email, password: 'secret_admin'});
+
+  //   const { status, body } = await chai.request(app)
+  //     .get('/login/role')
+  //     .set('Authentication', response.body.token);
+  //     console.log('body', body);
+      
+  //   expect(status).to.equal(StatusHTTP.badRequest);
+  //   expect(body).to.deep.equal({role: 'user'});
+  // })
+
+  it('router login/role return message erro case 1', async () => {
+    const { status, body } = await chai.request(app)
+      .get('/login/role')
+      
+    expect(status).to.equal(StatusHTTP.unauthorized);
+    expect(body).to.deep.equal({ message: 'Token not found' });
+  })
+
+  it('router login/role return message erro case 2', async () => {
+    const { status, body } = await chai.request(app)
+      .get('/login/role')
+      .auth('Authentication', tokenInvalid);
+      
+    expect(status).to.equal(StatusHTTP.unauthorized);
+    expect(body).to.deep.equal({ message: 'Token must be a valid token' });
   })
 
   afterEach(sinon.restore);

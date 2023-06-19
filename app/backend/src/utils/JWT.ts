@@ -1,19 +1,28 @@
 import * as Jwt from 'jsonwebtoken';
-import { payload } from '../Interfaces';
 
-const privateKey = process.env.JWT_SECRET || 'privateKey';
+export default class JWT {
+  static privateKey = process.env.JWT_SECRET || 'privateKey';
 
-const generateToken = (props: payload, role: string) => {
-  const token = Jwt.sign({ ...props, role }, privateKey, { algorithm: 'HS256', expiresIn: '1h' });
-  return token;
-};
+  generateToken = (email: string, role: string) => {
+    const token = Jwt.sign(
+      { email, role },
+      JWT.privateKey,
+      { algorithm: 'HS256', expiresIn: '1s' },
+    );
+    return token;
+  };
 
-const decodeToken = (token: string) => {
-  const decoded = Jwt.decode(token);
-  return decoded;
-};
+  decodeToken = (token: string) => {
+    const decoded = Jwt.decode(token);
+    return decoded;
+  };
 
-export default {
-  generateToken,
-  decodeToken,
-};
+  VerifyToken = (token: string) => {
+    try {
+      const result = Jwt.verify(token, JWT.privateKey);
+      return result;
+    } catch (error) {
+      return null;
+    }
+  };
+}
