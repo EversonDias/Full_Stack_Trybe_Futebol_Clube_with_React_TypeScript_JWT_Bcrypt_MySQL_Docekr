@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import teamRouter from './TeamsRouter';
 import loginRouter from './LoginRouter';
+import matchesRouter from './MatchesRouter';
 import Validation from '../middlewares/Validations';
 
 const router = Router();
@@ -14,5 +15,6 @@ router.use(
   Validation.isPasswordValid,
   loginRouter,
 );
+router.use('/matches', matchesRouter);
 
 export default router;

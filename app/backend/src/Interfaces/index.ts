@@ -12,3 +12,14 @@ export type typeDecode = {
   iat: number,
   exp: number
 };
+
+export type TMatches = {
+  id: number;
+  homeTeamId: number,
+  homeTeamGoals: number,
+  awayTeamId: number,
+  awayTeamGoals: number,
+  inProgress: boolean,
+  homeTeam: string,
+  awayTeam: string,
+};
