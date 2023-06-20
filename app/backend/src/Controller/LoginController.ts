@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import LoginService from '../Service/LoginService';
-import StatusHTTP from '../utils/StatusHTTP';
 import { Payload } from '../Interfaces';
 
 export default class UserController {
@@ -10,23 +9,13 @@ export default class UserController {
 
   login = async (req: Request, res: Response): Promise<Response | void> => {
     const payload: Payload = req.body;
-    const response = await this.loginService.login(payload);
-    if (response.status === 'SUCCESS') {
-      return res.status(StatusHTTP.success).json(response.data);
-    }
-    return res.status(StatusHTTP.unauthorized).json(response.data);
+    const { status, data } = await this.loginService.login(payload);
+    return res.status(status).json(data);
   };
 
   getRole = async (req: Request, res: Response): Promise<Response | void> => {
     const { authorization } = req.headers;
-
-    if (authorization) {
-      const result = this.loginService.getRole(authorization);
-      if (result.status === 'SUCCESS') {
-        return res.status(StatusHTTP.success).json(result.data);
-      }
-      return res.status(StatusHTTP.unauthorized).json(result.data);
-    }
-    return res.status(StatusHTTP.unauthorized).json({ message: 'Token not found' });
+    const { status, data } = this.loginService.getRole(authorization as string);
+    return res.status(status).json(data);
   };
 }

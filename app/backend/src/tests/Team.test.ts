@@ -33,7 +33,7 @@ describe('Teams Test', () => {
     const {status, body} = await chai.request(app).get('/teams/1');
 
     expect(status).to.equal(StatusHTTP.badRequest);
-    expect(body).to.deep.equal({ message: 'error' });
+    expect(body).to.deep.equal({ message: 'Error' });
   })
 
   afterEach(sinon.restore);

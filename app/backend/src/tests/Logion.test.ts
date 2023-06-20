@@ -95,9 +95,8 @@ describe('Login route test', () => {
   // })
 
   it('router login/role return message erro case 1', async () => {
-    const { status, body } = await chai.request(app)
-      .get('/login/role')
-      
+    const { status, body } = await chai.request(app).get('/login/role');
+
     expect(status).to.equal(StatusHTTP.unauthorized);
     expect(body).to.deep.equal({ message: 'Token not found' });
   })

@@ -1,6 +1,7 @@
 import { Payload, typeDecode } from '../Interfaces';
 import LoginModel from '../model/LoginModel';
 import JWT from '../utils/JWT';
+import StatusHTTP from '../utils/StatusHTTP';
 import bcrypt from '../utils/bcrypt';
 
 export default class UserService {
@@ -11,7 +12,7 @@ export default class UserService {
 
   login = async (props: Payload) => {
     const response = await this.loginModel.findOne(props.email);
-    if (response !== null) {
+    if (response) {
       const isPasswordValid = await bcrypt.compare(
         { password: props.password, hash: response.password },
       );
@@ -19,18 +20,18 @@ export default class UserService {
       if (isPasswordValid) {
         const token = this.jwt.generateToken(props.email, response.role);
 
-        return { status: 'SUCCESS', data: { token } };
+        return { status: StatusHTTP.success, data: { token } };
       }
     }
-    return { status: 'UNAUTHORIZED', data: { message: 'Invalid email or password' } };
+    return { status: StatusHTTP.badRequest, data: { message: 'Invalid email or password' } };
   };
 
   getRole = (token: string) => {
     const isAuthorization = this.jwt.VerifyToken(token);
     if (isAuthorization !== null) {
       const data = (isAuthorization as typeDecode).role;
-      return { status: 'SUCCESS', data: { role: data } };
+      return { status: StatusHTTP.success, data: { role: data } };
     }
-    return { status: 'UNAUTHORIZED', data: { message: 'Token must be a valid token' } };
+    return { status: StatusHTTP.unauthorized, data: { message: 'Token must be a valid token' } };
   };
 }

@@ -4,7 +4,7 @@ import SequelizeTeam from './SequelizeTeam';
 
 export default class SequelizeMatch extends Model<InferAttributes<SequelizeMatch>,
 InferAttributes<SequelizeMatch>> {
-  declare id: CreationOptional<number>;
+  declare id?: CreationOptional<number>;
   declare homeTeamId: number;
   declare homeTeamGoals: number;
   declare awayTeamId: number;
@@ -58,14 +58,14 @@ SequelizeMatch.init(
 );
 
 SequelizeMatch.belongsTo(SequelizeTeam, {
-  foreignKey: 'home_team_id',
-  as: 'away_team',
+  foreignKey: 'homeTeamId',
+  as: 'awayTeam',
   onDelete: 'cascade',
   onUpdate: 'cascade',
 });
 SequelizeMatch.belongsTo(SequelizeTeam, {
-  foreignKey: 'away_team_id',
-  as: 'home_team',
+  foreignKey: 'awayTeamId',
+  as: 'homeTeam',
   onDelete: 'cascade',
   onUpdate: 'cascade',
 });

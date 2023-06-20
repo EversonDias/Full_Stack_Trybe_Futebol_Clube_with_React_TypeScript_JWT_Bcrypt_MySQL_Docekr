@@ -6,3 +6,10 @@ export interface IMatcher {
   awayTeamGoals: number,
   inProgress: boolean,
 }
+
+export interface Body {
+  homeTeamId: number,
+  homeTeamGoals: number,
+  awayTeamId: number,
+  awayTeamGoals: number,
+}

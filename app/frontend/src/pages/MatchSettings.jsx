@@ -68,9 +68,11 @@ const MatchSettings = () => {
 
   const updateMatch = async (id, updateGoals) => {
     await api.patch(`/matches/${id}`, { ...updateGoals });
+    return navigate('/matches')
   };
   const finishMatch = async (id) => {
     await api.patch(`/matches/${id}/finish`);
+    return navigate('/matches')
   };
 
   if (!isAuthenticated) return <Loading />;
@@ -86,19 +88,19 @@ const MatchSettings = () => {
       <>
         <Header
           page="EDITAR PARTIDA"
-          FirstNavigationLink={ MatchesBtn }
-          logged={ isAuthenticated }
-          setLogin={ setIsAuthenticated }
+          FirstNavigationLink={MatchesBtn}
+          logged={isAuthenticated}
+          setLogin={setIsAuthenticated}
         />
         <EditGame
-          homeTeam={ [homeTeamState] }
-          awayTeam={ [awayTeamState] }
-          homeTeamGoals={ homeTeamGoals }
-          awayTeamGoals={ awayTeamGoals }
-          idMatch={ id }
-          updateMatch={ updateMatch }
-          finishMatch={ finishMatch }
-          getTeam={ getTeam }
+          homeTeam={[homeTeamState]}
+          awayTeam={[awayTeamState]}
+          homeTeamGoals={homeTeamGoals}
+          awayTeamGoals={awayTeamGoals}
+          idMatch={id}
+          updateMatch={updateMatch}
+          finishMatch={finishMatch}
+          getTeam={getTeam}
         />
       </>
     );
@@ -108,17 +110,17 @@ const MatchSettings = () => {
     <>
       <Header
         page="ADICIONAR PARTIDA"
-        FirstNavigationLink={ MatchesBtn }
-        logged={ isAuthenticated }
-        setLogin={ setIsAuthenticated }
+        FirstNavigationLink={MatchesBtn}
+        logged={isAuthenticated}
+        setLogin={setIsAuthenticated}
       />
       <CreateNewGame
-        setHomeTeamScoreboard={ setHomeTeamScoreboard }
-        setAwayTeamScoreboard={ setAwayTeamScoreboard }
-        teams={ teams }
-        getTeam={ getTeam }
-        createMatch={ createMatch }
-        finishMatch={ finishMatch }
+        setHomeTeamScoreboard={setHomeTeamScoreboard}
+        setAwayTeamScoreboard={setAwayTeamScoreboard}
+        teams={teams}
+        getTeam={getTeam}
+        createMatch={createMatch}
+        finishMatch={finishMatch}
       />
     </>
   );
