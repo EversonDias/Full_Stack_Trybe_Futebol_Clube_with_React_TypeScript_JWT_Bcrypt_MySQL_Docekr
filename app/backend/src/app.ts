@@ -1,4 +1,5 @@
 import * as express from 'express';
+import * as cors from 'cors'; // Use this after the variable declaration
 import TeamController from './Controller/TeamController';
 import UserController from './Controller/LoginController';
 import router from './routes';
@@ -28,7 +29,7 @@ class App {
       res.header('Access-Control-Allow-Headers', '*');
       next();
     };
-
+    this.app.use(cors());
     this.app.use(express.json());
     this.app.use(accessControl);
   }

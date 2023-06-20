@@ -18,13 +18,14 @@ const Login = () => {
 
     try {
       const { token } = await requestLogin('/login', { email, password });
+      console.log(token);
 
       setToken(token);
 
       const { role } = await requestData('/login/role', { email, password });
 
-      localStorage.setItem('token',  token);
-      localStorage.setItem('role',  role);
+      localStorage.setItem('token', token);
+      localStorage.setItem('role', role);
 
       setIsLogged(true);
     } catch (error) {
@@ -43,19 +44,19 @@ const Login = () => {
     <>
       <Header
         page="LOGIN"
-        FirstNavigationLink={ LeaderboardBtn }
-        SecondNavegationLink={ MatchesBtn }
+        FirstNavigationLink={LeaderboardBtn}
+        SecondNavegationLink={MatchesBtn}
       />
       <section className="user-login-area">
-        <img src={ positiveLogo } alt="Trybe Futebol Clube Negative Logo" />
+        <img src={positiveLogo} alt="Trybe Futebol Clube Negative Logo" />
         <form>
           <h1>Área do usuário</h1>
           <label htmlFor="email-input">
             <input
               className="login__login_input"
               type="text"
-              value={ email }
-              onChange={ ({ target: { value } }) => setEmail(value) }
+              value={email}
+              onChange={({ target: { value } }) => setEmail(value)}
               data-testid="login__login_input"
               placeholder="Login"
             />
@@ -63,8 +64,8 @@ const Login = () => {
           <label htmlFor="password-input">
             <input
               type="password"
-              value={ password }
-              onChange={ ({ target: { value } }) => setPassword(value) }
+              value={password}
+              onChange={({ target: { value } }) => setPassword(value)}
               data-testid="login__password_input"
               placeholder="Senha"
             />
@@ -84,7 +85,7 @@ const Login = () => {
           <button
             data-testid="login__login_btn"
             type="submit"
-            onClick={ (event) => login(event) }
+            onClick={(event) => login(event)}
           >
             Entrar
           </button>

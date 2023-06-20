@@ -7,7 +7,7 @@ export default class JWT {
     const token = Jwt.sign(
       { email, role },
       JWT.privateKey,
-      { algorithm: 'HS256', expiresIn: '1s' },
+      { algorithm: 'HS256', expiresIn: '1h' },
     );
     return token;
   };
