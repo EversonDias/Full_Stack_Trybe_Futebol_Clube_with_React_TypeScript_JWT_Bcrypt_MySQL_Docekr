@@ -20,6 +20,10 @@ export type TMatches = {
   awayTeamId: number,
   awayTeamGoals: number,
   inProgress: boolean,
-  homeTeam: string,
-  awayTeam: string,
+  homeTeam: {
+    nameTeam: string;
+  },
+  awayTeam: {
+    nameTeam: string;
+  },
 };

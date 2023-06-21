@@ -1,4 +1,4 @@
-import { TMatches } from '../Interfaces';
+import { InferAttributes } from 'sequelize';
 import { Body } from '../Interfaces/matches/IMatcher';
 import SequelizeMatch from '../database/models/SequelizeMatch';
 import SequelizeTeam from '../database/models/SequelizeTeam';
@@ -6,7 +6,9 @@ import SequelizeTeam from '../database/models/SequelizeTeam';
 export default class MatchesModel {
   private model = SequelizeMatch;
 
-  findAll = async (): Promise<TMatches[]> => {
+  findAll = async (): Promise<InferAttributes<SequelizeMatch, {
+    omit: never;
+  }>[]> => {
     const result = await this
       .model.findAll({
         include: [
@@ -15,7 +17,7 @@ export default class MatchesModel {
         ],
       });
     const data = result.map(({ dataValues }) => dataValues);
-    return data as any;
+    return data;
   };
 
   getFilterTeam = async ({ query, value }: { query: string, value: boolean }) => {
