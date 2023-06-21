@@ -10,4 +10,9 @@ export default class LeaderBoardService {
     const result = await this.leaderBoardModel.getHome();
     return { status: StatusHTTP.success, data: result };
   };
+
+  getAway = async () => {
+    const result = await this.leaderBoardModel.getAway();
+    return { status: StatusHTTP.success, data: result };
+  };
 }

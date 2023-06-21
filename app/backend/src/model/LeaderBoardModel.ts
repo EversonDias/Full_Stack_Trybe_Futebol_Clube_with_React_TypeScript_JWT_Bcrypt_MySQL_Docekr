@@ -54,12 +54,16 @@ export default class LeaderBoardModel {
     totalLosses: this.totalLosses,
     goalsFavor: this.goalsFavor,
     goalsOwn: this.goalsOwn,
-    goalsBalances: this.goalsFavor - this.goalsOwn,
+    goalsBalance: this.goalsFavor - this.goalsOwn,
     efficiency: ((this.totalVictories / this.totalGames) * 100).toFixed(2),
   });
 
   createTable = (list: SequelizeMatch[], data: ILeaderBoard, key: string) => {
-    this.name = data.homeTeam.teamName;
+    if (key === 'home') {
+      this.name = data.homeTeam?.teamName || '';
+    } else {
+      this.name = data.awayTeam?.teamName || '';
+    }
     this.totalGames = list.length;
     list.forEach(({ homeTeamGoals, awayTeamGoals }) => {
       this.totalPoints += this.points(homeTeamGoals, awayTeamGoals, key);
@@ -74,8 +78,8 @@ export default class LeaderBoardModel {
 
   order = (listOfTeams: TeamStatistic[]) => {
     const result = listOfTeams.sort((a, b) => {
-      if (a.name < b.name) return -1;
-      if (a.name > b.name) return 1;
+      // if (a.name < b.name) return -1;
+      // if (a.name > b.name) return 1;
       if (a.totalPoints !== b.totalPoints) return b.totalPoints - a.totalPoints;
       if (a.totalGames !== b.totalGames) return b.totalGames - a.totalGames;
       if (a.totalVictories !== b.totalVictories) return b.totalVictories - a.totalVictories;
@@ -123,7 +127,7 @@ export default class LeaderBoardModel {
       .map((dataValues) => {
         this.leaderBoardDefault();
         const currentTeam = this.filterTeam(
-          { teams: teamsHome, key: 'away', id: (dataValues.homeTeamId as number) },
+          { teams: teamsHome, key: 'away', id: (dataValues.awayTeamId as number) },
         );
         return this.createTable(currentTeam, dataValues, 'away');
       });

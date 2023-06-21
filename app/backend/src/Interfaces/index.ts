@@ -37,6 +37,6 @@ export type TeamStatistic = {
   totalLosses: number;
   goalsFavor: number;
   goalsOwn: number;
-  goalsBalances: number;
+  goalsBalance: number;
   efficiency: string;
 };

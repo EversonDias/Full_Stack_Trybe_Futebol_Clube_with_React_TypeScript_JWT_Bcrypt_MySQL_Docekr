@@ -3,7 +3,10 @@ export default interface ILeaderBoard {
   awayTeamGoals: number;
   homeTeamId?: number;
   awayTeamId?: number;
-  homeTeam: {
+  homeTeam?: {
     teamName: string;
-  }
+  },
+  awayTeam?: {
+    teamName: string;
+  };
 }
