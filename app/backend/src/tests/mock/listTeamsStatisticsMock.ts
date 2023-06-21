@@ -104,7 +104,7 @@ const listTeamsHome = [
     goalsFavor: 1,
     goalsOwn: 1,
     goalsBalance: 0,
-    efficiency: '0.00'
+    efficiency: '33.33'
   },
   {
     name: 'Internacional',
@@ -116,7 +116,7 @@ const listTeamsHome = [
     goalsFavor: 1,
     goalsOwn: 1,
     goalsBalance: 0,
-    efficiency: '0.00'
+    efficiency: '33.33'
   },
   {
     name: 'Botafogo',
@@ -128,8 +128,9 @@ const listTeamsHome = [
     goalsFavor: 0,
     goalsOwn: 0,
     goalsBalance: 0,
-    efficiency: '0.00'
+    efficiency: '33.33'
   }
+
 ]
 
 const listTeamsAway = [
@@ -143,7 +144,7 @@ const listTeamsAway = [
     goalsFavor: 1,
     goalsOwn: 1,
     goalsBalance: 0,
-    efficiency: '0.00'
+    efficiency: '33.33'
   },
   {
     name: 'Santos',
@@ -155,7 +156,7 @@ const listTeamsAway = [
     goalsFavor: 1,
     goalsOwn: 1,
     goalsBalance: 0,
-    efficiency: '0.00'
+    efficiency: '33.33'
   },
   {
     name: 'Bahia',
@@ -167,7 +168,7 @@ const listTeamsAway = [
     goalsFavor: 0,
     goalsOwn: 0,
     goalsBalance: 0,
-    efficiency: '0.00'
+    efficiency: '33.33'
   },
   {
     name: 'Napoli-SC',
@@ -176,10 +177,10 @@ const listTeamsAway = [
     totalVictories: 0,
     totalDraws: 0,
     totalLosses: 1,
-    goalsFavor: 3,
-    goalsOwn: 0,
-    goalsBalance: 3,
-    efficiency: '0.00'
+    goalsFavor: 0,
+    goalsOwn: 3,
+    goalsBalance: -3,
+    efficiency: 'NaN'
   }
 ]
 
