@@ -30,7 +30,7 @@ export default class LeaderBoardModel {
       if (home > away) {
         return 3;
       }
-    } else if (away < home) {
+    } else if (away > home) {
       return 3;
     }
     if (home === away) {
@@ -55,7 +55,7 @@ export default class LeaderBoardModel {
     goalsFavor: this.goalsFavor,
     goalsOwn: this.goalsOwn,
     goalsBalance: this.goalsFavor - this.goalsOwn,
-    efficiency: ((this.totalVictories / this.totalGames) * 100).toFixed(2),
+    efficiency: ((this.totalVictories / (this.totalGames * 3)) * 100).toFixed(2),
   });
 
   createTable = (list: SequelizeMatch[], data: ILeaderBoard, key: string) => {
@@ -78,15 +78,9 @@ export default class LeaderBoardModel {
 
   order = (listOfTeams: TeamStatistic[]) => {
     const result = listOfTeams.sort((a, b) => {
-      // if (a.name < b.name) return -1;
-      // if (a.name > b.name) return 1;
       if (a.totalPoints !== b.totalPoints) return b.totalPoints - a.totalPoints;
-      if (a.totalGames !== b.totalGames) return a.totalGames - b.totalGames;
-      if (a.totalVictories !== b.totalVictories) return b.totalVictories - a.totalVictories;
-      if (a.totalDraws !== b.totalDraws) return b.totalDraws - a.totalDraws;
-      if (a.totalLosses !== b.totalLosses) return a.totalLosses - b.totalLosses;
+      if (a.goalsBalance !== b.goalsBalance) return b.goalsBalance - a.goalsBalance;
       if (a.goalsFavor !== b.goalsFavor) return b.goalsFavor - a.goalsFavor;
-      if (a.goalsOwn !== b.goalsOwn) return a.goalsOwn - b.goalsOwn;
       return 0;
     });
     return result;
@@ -147,7 +141,7 @@ export default class LeaderBoardModel {
     goalsBalance: (TeamCurrent.goalsFavor + teamOrigen.goalsFavor)
       - (TeamCurrent.goalsOwn + teamOrigen.goalsOwn),
     efficiency: (((TeamCurrent.totalVictories + teamOrigen.totalVictories)
-      / (TeamCurrent.totalGames + teamOrigen.totalGames)) * 100).toFixed(2),
+      / ((TeamCurrent.totalGames + teamOrigen.totalGames) * 3)) * 100).toFixed(2),
   });
 
   getAllTeams = async () => {
