@@ -92,7 +92,7 @@ const listTeamsHome = [
     goalsFavor: 3,
     goalsOwn: 0,
     goalsBalance: 3,
-    efficiency: '33.33'
+    efficiency: '100.00'
   },
   {
     name: 'São Paulo',
@@ -130,7 +130,6 @@ const listTeamsHome = [
     goalsBalance: 0,
     efficiency: '33.33'
   }
-
 ]
 
 const listTeamsAway = [
@@ -180,7 +179,7 @@ const listTeamsAway = [
     goalsFavor: 0,
     goalsOwn: 3,
     goalsBalance: -3,
-    efficiency: 'NaN'
+    efficiency: '0.00'
   }
 ]
 

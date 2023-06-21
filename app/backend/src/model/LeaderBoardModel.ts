@@ -55,7 +55,7 @@ export default class LeaderBoardModel {
     goalsFavor: this.goalsFavor,
     goalsOwn: this.goalsOwn,
     goalsBalance: this.goalsFavor - this.goalsOwn,
-    efficiency: ((this.totalPoints / (this.totalPoints * 3)) * 100).toFixed(2),
+    efficiency: ((this.totalPoints / (this.totalGames * 3)) * 100).toFixed(2),
   });
 
   createDefault = (list: SequelizeMatch[], key: string) => {
