@@ -44,6 +44,19 @@ export default class LeaderBoardModel {
     ? teams.filter(({ homeTeamId }) => homeTeamId === id)
     : teams.filter(({ awayTeamId }) => awayTeamId === id)) ;
 
+  buildTeam = () => ({
+    name: this.name,
+    totalPoints: this.totalPoints,
+    totalGames: this.totalGames,
+    totalVictories: this.totalVictories,
+    totalDraws: this.totalDraws,
+    totalLosses: this.totalLosses,
+    goalsFavor: this.goalsFavor,
+    goalsOwn: this.goalsOwn,
+    goalsBalances: this.goalsFavor - this.goalsOwn,
+    efficiency: ((this.totalVictories / this.totalGames) * 100).toFixed(2),
+  });
+
   createTable = (list: SequelizeMatch[], data: ILeaderBoard, key: string) => {
     this.name = data.homeTeam.teamName;
     this.totalGames = list.length;
@@ -55,14 +68,7 @@ export default class LeaderBoardModel {
       this.goalsFavor += homeTeamGoals;
       this.goalsOwn += awayTeamGoals;
     });
-    return { name: this.name,
-      totalPoints: this.totalPoints,
-      totalGames: this.totalGames,
-      totalVictories: this.totalVictories,
-      totalDraws: this.totalDraws,
-      totalLosses: this.totalLosses,
-      goalsFavor: this.goalsFavor,
-      goalsOwn: this.goalsOwn };
+    return this.buildTeam();
   };
 
   getHome = async () => {
