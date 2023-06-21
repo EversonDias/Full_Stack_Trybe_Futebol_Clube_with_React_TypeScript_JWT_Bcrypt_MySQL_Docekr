@@ -4,7 +4,7 @@ import SequelizeTeam from '../database/models/SequelizeTeam';
 
 export default class Validation {
   private static model = SequelizeTeam;
-  static hasEmail = (req: Request, res: Response, next: NextFunction): Response | void => {
+  static hasKey = (req: Request, res: Response, next: NextFunction): Response | void => {
     const payload = req.body;
     if (!['email', 'password'].every((key) => key in payload)) {
       return res.status(StatusHTTP.badRequest).json({ message: 'All fields must be filled' });
@@ -33,7 +33,7 @@ export default class Validation {
     const { homeTeamId, awayTeamId } = req.body;
     if (homeTeamId === awayTeamId) {
       return res
-        .status(StatusHTTP.badRequest)
+        .status(StatusHTTP.unprocessableEntity)
         .json({ message: 'It is not possible to create a match with two equal teams' });
     }
     return next();

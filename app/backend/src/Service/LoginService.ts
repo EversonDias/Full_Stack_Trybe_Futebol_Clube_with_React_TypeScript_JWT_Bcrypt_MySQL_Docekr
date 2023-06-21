@@ -8,12 +8,13 @@ export default class UserService {
   constructor(
     private loginModel = new LoginModel(),
     private jwt = new JWT(),
+    private crypt = bcrypt,
   ) {}
 
   login = async (props: Payload) => {
     const response = await this.loginModel.findOne(props.email);
     if (response) {
-      const isPasswordValid = await bcrypt.compare(
+      const isPasswordValid = await this.crypt.compare(
         { password: props.password, hash: response.password },
       );
 
@@ -23,12 +24,12 @@ export default class UserService {
         return { status: StatusHTTP.success, data: { token } };
       }
     }
-    return { status: StatusHTTP.badRequest, data: { message: 'Invalid email or password' } };
+    return { status: StatusHTTP.unauthorized, data: { message: 'Invalid email or password' } };
   };
 
   getRole = (token: string) => {
     const isAuthorization = this.jwt.VerifyToken(token);
-    if (isAuthorization !== null) {
+    if (isAuthorization) {
       const data = (isAuthorization as typeDecode).role;
       return { status: StatusHTTP.success, data: { role: data } };
     }

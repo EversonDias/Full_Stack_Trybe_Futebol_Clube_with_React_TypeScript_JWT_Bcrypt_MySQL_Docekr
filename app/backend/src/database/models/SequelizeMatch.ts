@@ -59,13 +59,13 @@ SequelizeMatch.init(
 
 SequelizeMatch.belongsTo(SequelizeTeam, {
   foreignKey: 'homeTeamId',
-  as: 'awayTeam',
+  as: 'homeTeam',
   onDelete: 'cascade',
   onUpdate: 'cascade',
 });
 SequelizeMatch.belongsTo(SequelizeTeam, {
   foreignKey: 'awayTeamId',
-  as: 'homeTeam',
+  as: 'awayTeam',
   onDelete: 'cascade',
   onUpdate: 'cascade',
 });

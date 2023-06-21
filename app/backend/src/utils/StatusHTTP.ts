@@ -4,4 +4,5 @@ export default {
   unauthorized: 401,
   created: 201,
   notFound: 404,
+  unprocessableEntity: 422,
 };
