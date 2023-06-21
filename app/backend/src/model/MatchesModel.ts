@@ -43,7 +43,7 @@ export default class MatchesModel {
   };
 
   create = async (body: Body) => {
-    const result = await this.model.create({ ...body, inProgress: true });
+    const result = await this.model.create({ ...body, inProgress: false });
     return result.dataValues;
   };
 }

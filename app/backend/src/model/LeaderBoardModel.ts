@@ -1,3 +1,4 @@
+import { TeamStatistic } from '../Interfaces';
 import ILeaderBoard from '../Interfaces/ILeaderBoard';
 import SequelizeMatch from '../database/models/SequelizeMatch';
 import SequelizeTeam from '../database/models/SequelizeTeam';
@@ -71,13 +72,34 @@ export default class LeaderBoardModel {
     return this.buildTeam();
   };
 
+  order = (listOfTeams: TeamStatistic[]) => {
+    const result = listOfTeams.sort((a, b) => {
+      if (a.name < b.name) return -1;
+      if (a.name > b.name) return 1;
+      if (a.totalPoints !== b.totalPoints) return b.totalPoints - a.totalPoints;
+      if (a.totalGames !== b.totalGames) return b.totalGames - a.totalGames;
+      if (a.totalVictories !== b.totalVictories) return b.totalVictories - a.totalVictories;
+      if (a.totalDraws !== b.totalDraws) return b.totalDraws - a.totalDraws;
+      if (a.totalLosses !== b.totalLosses) return a.totalLosses - b.totalLosses;
+      if (a.goalsFavor !== b.goalsFavor) return b.goalsFavor - a.goalsFavor;
+      if (a.goalsOwn !== b.goalsOwn) return a.goalsOwn - b.goalsOwn;
+      return 0;
+    });
+    return result;
+  };
+
+  removeDuplicates = (list: TeamStatistic[]) => list.filter((TeamCurrent, index, listOrigen) =>
+    index === listOrigen.findIndex((teamOrigen) =>
+      teamOrigen.name === TeamCurrent.name));
+
   getHome = async () => {
     const teamsHome = await this.model
       .findAll({ where: { inProgress: false },
         include: [
           { model: SequelizeTeam, as: 'homeTeam', attributes: { exclude: ['id'] } },
         ],
-        attributes: ['homeTeamGoals', 'awayTeamGoals', 'homeTeamId'] });
+        attributes: ['homeTeamGoals', 'awayTeamGoals', 'homeTeamId'],
+      });
     const data = (teamsHome as unknown as ILeaderBoard[])
       .map((dataValues) => {
         this.leaderBoardDefault();
@@ -86,7 +108,8 @@ export default class LeaderBoardModel {
         );
         return this.createTable(currentTeam, dataValues, 'home');
       });
-    return data;
+    const filterData = this.removeDuplicates(data);
+    return this.order((filterData as unknown as TeamStatistic[]));
   };
 
   getAway = async () => {
@@ -104,6 +127,7 @@ export default class LeaderBoardModel {
         );
         return this.createTable(currentTeam, dataValues, 'away');
       });
-    return data;
+    const filterData = this.removeDuplicates(data);
+    return this.order((filterData as unknown as TeamStatistic[]));
   };
 }

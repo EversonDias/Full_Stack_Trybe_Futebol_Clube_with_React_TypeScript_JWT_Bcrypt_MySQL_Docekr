@@ -27,3 +27,16 @@ export type TMatches = {
     nameTeam: string;
   },
 };
+
+export type TeamStatistic = {
+  name: string;
+  totalPoints: number;
+  totalGames: number;
+  totalVictories: number;
+  totalDraws: number;
+  totalLosses: number;
+  goalsFavor: number;
+  goalsOwn: number;
+  goalsBalances: number;
+  efficiency: string;
+};
