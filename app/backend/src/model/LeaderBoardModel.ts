@@ -81,7 +81,7 @@ export default class LeaderBoardModel {
       // if (a.name < b.name) return -1;
       // if (a.name > b.name) return 1;
       if (a.totalPoints !== b.totalPoints) return b.totalPoints - a.totalPoints;
-      if (a.totalGames !== b.totalGames) return b.totalGames - a.totalGames;
+      if (a.totalGames !== b.totalGames) return a.totalGames - b.totalGames;
       if (a.totalVictories !== b.totalVictories) return b.totalVictories - a.totalVictories;
       if (a.totalDraws !== b.totalDraws) return b.totalDraws - a.totalDraws;
       if (a.totalLosses !== b.totalLosses) return a.totalLosses - b.totalLosses;
@@ -94,7 +94,7 @@ export default class LeaderBoardModel {
 
   removeDuplicates = (list: TeamStatistic[]) => list.filter((TeamCurrent, index, listOrigen) =>
     index === listOrigen.findIndex((teamOrigen) =>
-      teamOrigen.name === TeamCurrent.name));
+      JSON.stringify(teamOrigen) === JSON.stringify(TeamCurrent)));
 
   getHome = async () => {
     const teamsHome = await this.model
@@ -133,5 +133,31 @@ export default class LeaderBoardModel {
       });
     const filterData = this.removeDuplicates(data);
     return this.order((filterData as unknown as TeamStatistic[]));
+  };
+
+  removerDuplicateAllTeam = (TeamCurrent: TeamStatistic, teamOrigen: TeamStatistic) => ({
+    name: TeamCurrent.name,
+    totalPoints: TeamCurrent.totalPoints + teamOrigen.totalPoints,
+    totalGames: TeamCurrent.totalGames + teamOrigen.totalGames,
+    totalVictories: TeamCurrent.totalVictories + teamOrigen.totalVictories,
+    totalDraws: TeamCurrent.totalDraws + teamOrigen.totalDraws,
+    totalLosses: TeamCurrent.totalLosses + teamOrigen.totalLosses,
+    goalsFavor: TeamCurrent.goalsFavor + teamOrigen.goalsFavor,
+    goalsOwn: TeamCurrent.goalsOwn + teamOrigen.goalsOwn,
+    goalsBalance: (TeamCurrent.goalsFavor + teamOrigen.goalsFavor)
+      - (TeamCurrent.goalsOwn + teamOrigen.goalsOwn),
+    efficiency: (((TeamCurrent.totalVictories + teamOrigen.totalVictories)
+      / (TeamCurrent.totalGames + teamOrigen.totalGames)) * 100).toFixed(2),
+  });
+
+  getAllTeams = async () => {
+    const teamHome = await this.getHome();
+    const teamAway = await this.getAway();
+    const data: TeamStatistic[] = [];
+    teamHome.forEach((TeamCurrent) => {
+      const [teamOrigen] = teamAway.filter(({ name }) => name === TeamCurrent.name);
+      data.push(this.removerDuplicateAllTeam(TeamCurrent, teamOrigen));
+    });
+    return this.order(data);
   };
 }

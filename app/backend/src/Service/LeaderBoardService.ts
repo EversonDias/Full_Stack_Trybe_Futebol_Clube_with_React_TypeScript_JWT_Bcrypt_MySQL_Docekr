@@ -15,4 +15,9 @@ export default class LeaderBoardService {
     const result = await this.leaderBoardModel.getAway();
     return { status: StatusHTTP.success, data: result };
   };
+
+  getAllTeams = async () => {
+    const result = await this.leaderBoardModel.getAllTeams();
+    return { status: StatusHTTP.success, data: result };
+  };
 }
