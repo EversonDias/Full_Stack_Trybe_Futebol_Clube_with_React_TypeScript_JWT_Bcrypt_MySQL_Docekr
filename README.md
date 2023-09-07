@@ -56,7 +56,7 @@ Para acessar e executar este projeto, siga os passos abaixo:
 2. Clone o Projeto
 
 ```bash
-git clone  TrybeFutebolClub
+git clone https://github.com/EversonDias/Full_Stack_Trybe_Futebol_Clube_with_React_TypeScript_JWT_Bcrypt_MySQL_Docekr.git TrybeFutebolClub
 ```
 
 3. Entre no projeto
