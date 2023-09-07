@@ -39,7 +39,9 @@ O projeto "Trube Futebol Clube" é parte do currículo da formação de Desenvol
 - Ordena a Tabela por Pontuação Geral
 - Ordena a Tabela por melhores Pontuadores com Mandantes
 - Ordena a Tabela por melhores Pontuadores com Visitantes
-- Fazer Login
+- Fazer Login com
+    Email: ```admin@admin.com```
+    Senha: ```secret_admin```
 - Editar um Partida em andamento
 - Finalizar uma Partida em andamento
 - Iniciar uma Nova Partida
